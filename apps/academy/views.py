@@ -1,43 +1,41 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseNotAllowed
+from django.views.generic import View
 
 from apps.academy import forms
 
 
-def home(request):
-    if request.method == "GET":
+class HomeView(View):
+    def get(self, request):
         return render(request, "home.html")
-    else:
-        return HttpResponseNotAllowed(["GET"])
 
 
-def student_info(request):
-    if request.method == "GET":
-        form = forms.StudentForm()
+class StudentInfoView(View):
+    form_class = forms.StudentForm
+
+    def get(self, request):
+        form = self.form_class()
         return render(request, "student_info.html", {"form": form})
 
-    if request.method == "POST":
-        form = forms.StudentForm(request.POST)
+    def post(self, request):
+        form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
             return redirect("academy:home")
         else:
             return render(request, "student_info.html", {"form": form})
 
-    return HttpResponseNotAllowed(["GET", "POST"])
 
+class AssignmentsView(View):
+    form_class = forms.StudentAssignmentForm
 
-def assignments(request):
-    if request.method == "GET":
-        form = forms.StudentAssignmentForm()
+    def get(self, request):
+        form = self.form_class()
         return render(request, "assignments.html", {"form": form})
 
-    if request.method == "POST":
-        form = forms.StudentAssignmentForm(request.POST)
+    def post(self, request):
+        form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
             return redirect("academy:home")
         else:
             return render(request, "assignments.html", {"form": form})
-
-    return HttpResponseNotAllowed(["GET", "POST"])
