@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Assignments{% endblock %}
+
+{% block header %}
+    <h1>ASSIGNMENTS</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+        <form action="{% url 'academy:assignments' %}" method="POST">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="fieldWrapper">
+                {{ form.student.errors }}
+                <label for="{{ form.student.id_for_label }}">Student:</label>
+                {{ form.student }}
+            </div>
+            <div class="fieldWrapper">
+                {{ form.assignment.errors }}
+                <label for="{{ form.assignment.id_for_label }}">Assignment:</label>
+                {{ form.assignment }}
+            </div>
+            <div class="submit-container">
+                <input class="btn btn-primary" type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+{% endblock %}

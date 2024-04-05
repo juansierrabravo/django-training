@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block header %}
+    <h1>HOME</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="buttons-container">
+        <a href="{% url 'academy:student_info'%}"><button type="button" class="btn btn-primary" >Student Info</button></a>
+        <a href="{% url 'academy:assignments'%}"><button type="button" class="btn btn-primary">Assignment</button></a>
+        <button type="button" class="btn btn-primary" onclick="fetchApi()">API</button>
+    </div>
+    <div id="fetch-results"></div>
+{% endblock %}
